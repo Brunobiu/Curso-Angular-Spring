@@ -1,23 +1,47 @@
 package com.bruno.helpdesk.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 import com.bruno.helpdesk.domain.enums.Prioridade;
 import com.bruno.helpdesk.domain.enums.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class Chamado {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class Chamado implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
+	@Id // Indica que este campo é a chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Geração automática do ID com estratégia de identidade
 	private Integer id;
-	private LocalDate dataAbertura = LocalDate.now();
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") // Formata a data de criação
+	private LocalDate dataAbertura = LocalDate.now(); /* Todo chamado aberto ja mostra a data atual */
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") // Formata a data de criação
 	private LocalDate dataFechamento;
+	
 	private Prioridade prioridade;
 	private Status status;
 	private String titulo;
 	private String observacoes;
 	
-	
+	/*  Obrigatorio ter esse chamado */
+	@ManyToOne
+	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
+	
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 	
