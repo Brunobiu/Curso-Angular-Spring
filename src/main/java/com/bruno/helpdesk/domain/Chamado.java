@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.bruno.helpdesk.domain.enums.Prioridade;
 import com.bruno.helpdesk.domain.enums.Status;
+import com.bruno.helpdesk.domain.enums.Prioridade;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
@@ -30,8 +30,8 @@ public class Chamado implements Serializable{
 	@JsonFormat(pattern = "dd/MM/yyyy") // Formata a data de criação
 	private LocalDate dataFechamento;
 	
-	private Prioridade prioridade;
-	private Status status;
+	private Status prioridade;
+	private Prioridade status;
 	private String titulo;
 	private String observacoes;
 	
@@ -48,7 +48,7 @@ public class Chamado implements Serializable{
 	public Chamado() {
 		super();
 	}
-	public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico,
+	public Chamado(Integer id, Status prioridade, Prioridade status, String titulo, String observacoes, Tecnico tecnico,
 			Cliente cliente) {
 		super();
 		this.id = id;
@@ -77,16 +77,16 @@ public class Chamado implements Serializable{
 	public void setDataFechamento(LocalDate dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
-	public Prioridade getPrioridade() {
+	public Status getPrioridade() {
 		return prioridade;
 	}
-	public void setPrioridade(Prioridade prioridade) {
+	public void setPrioridade(Status prioridade) {
 		this.prioridade = prioridade;
 	}
-	public Status getStatus() {
+	public Prioridade getStatus() {
 		return status;
 	}
-	public void setStatus(Status status) {
+	public void setStatus(Prioridade status) {
 		this.status = status;
 	}
 	public String getTitulo() {
