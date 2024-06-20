@@ -15,6 +15,8 @@ import com.bruno.helpdesk.repositories.TecnicoRepesitory;
 import com.bruno.helpdesk.services.exceptions.DataintegrityViolationException;
 import com.bruno.helpdesk.services.exceptions.ObjectnotFoundException;
 
+import jakarta.validation.Valid;
+
 @Service
 public class TecnicoService {
 
@@ -39,6 +41,14 @@ public class TecnicoService {
 		Tecnico newObj = new Tecnico(objDTO);
 		return repository.save(newObj);
 	}
+	
+	public Tecnico update(Integer id, @Valid TecnicoDTO obDto) {
+		obDto.setId(id);
+		Tecnico oldObj = findById(id);
+		validaPorCpfEEmail(obDto);
+		oldObj = new Tecnico(obDto);
+		return repository.save(oldObj);
+	}
 
 	private void validaPorCpfEEmail(TecnicoDTO objDTO) {
 		Optional<Pessoa> obj = pessoaRepesitory.findByCpf(objDTO.getCpf());
@@ -51,4 +61,5 @@ public class TecnicoService {
 			throw new DataintegrityViolationException("E-mail já cadastrado no sistema!");
 		}
 	}
+
 }
