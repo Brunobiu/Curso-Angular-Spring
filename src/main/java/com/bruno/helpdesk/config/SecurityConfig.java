@@ -22,6 +22,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.bruno.helpdesk.security.JWTAuthenticationFilter;
+import com.bruno.helpdesk.security.JWTAuthorizationFilter;
 import com.bruno.helpdesk.security.JWTUtil;
  
 @Configuration
@@ -50,7 +51,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JWTAuthenticationFilter(authenticationManager, jwtUtil))
-                .addFilter(new JWTAuthenticationFilter(authenticationManager, jwtUtil))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager, jwtUtil, userDetailsService))
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
